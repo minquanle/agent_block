@@ -1,0 +1,2 @@
+max_same_call=5: status=max_steps; steps=5; tool_calls=5
+max_same_call=2: status=repeat_limit; steps=3; tool_calls=2

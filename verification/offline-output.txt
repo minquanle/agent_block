@@ -1,0 +1,28 @@
+A - no tool: status=final; steps=1; tool_calls=0
+  Xin chào!
+B - one tool: status=final; steps=2; tool_calls=1
+  calculator: {'ok': True, 'data': {'value': 56088.0}}
+  123 x 456 = 56088.
+C - two tools: status=final; steps=2; tool_calls=2
+  calculator: {'ok': True, 'data': {'value': 56088.0}}
+  count_words: {'ok': True, 'data': {'count': 4}}
+  56088; 4 đơn vị cách trắng.
+D - dependent tools: status=final; steps=3; tool_calls=2
+  count_words: {'ok': True, 'data': {'count': 4}}
+  calculator: {'ok': True, 'data': {'value': 100000.0}}
+  4 x 25000 = 100000.
+E - max_steps: status=max_steps; steps=1; tool_calls=1
+  count_words: {'ok': True, 'data': {'count': 4}}
+  Đã chạm giới hạn bước; chưa có câu trả lời cuối.
+F - tool error: status=final; steps=2; tool_calls=1
+  calculator: {'ok': False, 'error': 'invalid_arguments'}
+  Không thể chia cho 0.
+G - repeated call: status=repeat_limit; steps=3; tool_calls=2
+  count_words: {'ok': True, 'data': {'count': 4}}
+  count_words: {'ok': True, 'data': {'count': 4}}
+  count_words: {'ok': False, 'error': 'repeat_limit'}
+  Đã dừng vì lặp cùng tool và tham số.
+H - corrected arguments: status=final; steps=3; tool_calls=2
+  calculator: {'ok': False, 'error': 'invalid_arguments'}
+  calculator: {'ok': True, 'data': {'value': 0.5}}
+  1 / 2 = 0.5.
