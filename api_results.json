@@ -1,0 +1,639 @@
+{
+  "tested_at_utc": "2026-10-09T07:31:54.192482+00:00",
+  "model": "gemini-3.5-flash-lite",
+  "api": "Gemini Developer API",
+  "passed": true,
+  "scenarios": [
+    {
+      "scenario": "A",
+      "question": "Xin chào, hãy giới thiệu ngắn khả năng của bạn.",
+      "tool_choice": "auto",
+      "first_tool": null,
+      "status": "final",
+      "steps": 1,
+      "tool_calls": 0,
+      "answer": "Xin chào! Tôi là trợ lý AI của bạn. Tôi có thể giúp bạn:\n\n* **Trả lời câu hỏi** và cung cấp thông tin về nhiều lĩnh vực khác nhau.\n* **Hỗ trợ tính toán** với các phép tính cơ bản.\n* **Đếm từ** trong các đoạn văn bản.\n* **Soạn thảo văn bản**, dịch thuật, lập trình và nhiều tác vụ hữu ích khác.\n\nBạn cần tôi giúp gì hôm nay?",
+      "trace": [
+        {
+          "step": 1,
+          "event": "model",
+          "seconds": 2.065
+        }
+      ],
+      "model_versions": [
+        "gemini-3.5-flash-lite"
+      ],
+      "usage": [
+        {
+          "input_tokens": 244,
+          "output_tokens": 97,
+          "total_tokens": 341,
+          "input_token_details": {
+            "cache_read": 0
+          }
+        }
+      ],
+      "checks": {
+        "expected_status": true,
+        "required_tools": true,
+        "no_tools": true,
+        "api_usage_received": true
+      },
+      "passed": true
+    },
+    {
+      "scenario": "B",
+      "question": "Dùng calculator tính 123 nhân 456 rồi trả lời ngắn.",
+      "tool_choice": "auto",
+      "first_tool": null,
+      "status": "final",
+      "steps": 2,
+      "tool_calls": 1,
+      "answer": "56088",
+      "trace": [
+        {
+          "step": 1,
+          "event": "model",
+          "seconds": 8.69
+        },
+        {
+          "step": 1,
+          "event": "tool",
+          "name": "calculator",
+          "args": {
+            "b": 456,
+            "a": 123,
+            "operation": "multiply"
+          },
+          "id": "call_349469",
+          "dispatched": true,
+          "payload": {
+            "ok": true,
+            "data": {
+              "value": 56088.0
+            }
+          },
+          "seconds": 0.0
+        },
+        {
+          "step": 2,
+          "event": "model",
+          "seconds": 9.698
+        }
+      ],
+      "model_versions": [
+        "gemini-3.5-flash-lite"
+      ],
+      "usage": [
+        {
+          "input_tokens": 250,
+          "output_tokens": 26,
+          "total_tokens": 276,
+          "input_token_details": {
+            "cache_read": 0
+          }
+        },
+        {
+          "input_tokens": 296,
+          "output_tokens": 5,
+          "total_tokens": 301,
+          "input_token_details": {
+            "cache_read": 0
+          }
+        }
+      ],
+      "checks": {
+        "expected_status": true,
+        "required_tools": true,
+        "value_56088.0": true,
+        "api_usage_received": true
+      },
+      "passed": true
+    },
+    {
+      "scenario": "C",
+      "question": "Dùng công cụ tính 123 nhân 456 và đếm các đơn vị cách trắng trong \"Hoc AI rat vui\". Hai việc độc lập.",
+      "tool_choice": "auto",
+      "first_tool": null,
+      "status": "final",
+      "steps": 2,
+      "tool_calls": 2,
+      "answer": "Kết quả cho hai việc như sau:\n\n1. Phép tính $123 \\times 456 = 56088$.\n2. Số đơn vị cách trắng trong chuỗi \"Hoc AI rat vui\" là 4 từ (tương ứng với kết quả đếm đơn vị).",
+      "trace": [
+        {
+          "step": 1,
+          "event": "model",
+          "seconds": 9.057
+        },
+        {
+          "step": 1,
+          "event": "tool",
+          "name": "calculator",
+          "args": {
+            "a": 123,
+            "operation": "multiply",
+            "b": 456
+          },
+          "id": "call_342499",
+          "dispatched": true,
+          "payload": {
+            "ok": true,
+            "data": {
+              "value": 56088.0
+            }
+          },
+          "seconds": 0.0
+        },
+        {
+          "step": 1,
+          "event": "tool",
+          "name": "count_words",
+          "args": {
+            "text": "Hoc AI rat vui"
+          },
+          "id": "call_342500",
+          "dispatched": true,
+          "payload": {
+            "ok": true,
+            "data": {
+              "count": 4
+            }
+          },
+          "seconds": 0.0
+        },
+        {
+          "step": 2,
+          "event": "model",
+          "seconds": 10.425
+        }
+      ],
+      "model_versions": [
+        "gemini-3.5-flash-lite"
+      ],
+      "usage": [
+        {
+          "input_tokens": 267,
+          "output_tokens": 46,
+          "total_tokens": 313,
+          "input_token_details": {
+            "cache_read": 0
+          }
+        },
+        {
+          "input_tokens": 349,
+          "output_tokens": 66,
+          "total_tokens": 415,
+          "input_token_details": {
+            "cache_read": 0
+          }
+        }
+      ],
+      "checks": {
+        "expected_status": true,
+        "required_tools": true,
+        "value_56088.0": true,
+        "count_4": true,
+        "api_usage_received": true
+      },
+      "passed": true
+    },
+    {
+      "scenario": "D",
+      "question": "Trước tiên gọi count_words cho \"Hoc AI rat vui\". Chờ kết quả công cụ, sau đó dùng calculator nhân số đếm với 25000. Không tự đoán số đếm trước khi nhận kết quả.",
+      "tool_choice": "auto",
+      "first_tool": null,
+      "status": "final",
+      "steps": 3,
+      "tool_calls": 2,
+      "answer": "Số từ trong chuỗi \"Hoc AI rat vui\" là 4. Sau khi nhân với 25000, kết quả là 100000.",
+      "trace": [
+        {
+          "step": 1,
+          "event": "model",
+          "seconds": 9.076
+        },
+        {
+          "step": 1,
+          "event": "tool",
+          "name": "count_words",
+          "args": {
+            "text": "Hoc AI rat vui"
+          },
+          "id": "call_371172",
+          "dispatched": true,
+          "payload": {
+            "ok": true,
+            "data": {
+              "count": 4
+            }
+          },
+          "seconds": 0.0
+        },
+        {
+          "step": 2,
+          "event": "model",
+          "seconds": 9.954
+        },
+        {
+          "step": 2,
+          "event": "tool",
+          "name": "calculator",
+          "args": {
+            "a": 4,
+            "b": 25000,
+            "operation": "multiply"
+          },
+          "id": "call_277094",
+          "dispatched": true,
+          "payload": {
+            "ok": true,
+            "data": {
+              "value": 100000.0
+            }
+          },
+          "seconds": 0.0
+        },
+        {
+          "step": 3,
+          "event": "model",
+          "seconds": 9.901
+        }
+      ],
+      "model_versions": [
+        "gemini-3.5-flash-lite"
+      ],
+      "usage": [
+        {
+          "input_tokens": 281,
+          "output_tokens": 20,
+          "total_tokens": 301,
+          "input_token_details": {
+            "cache_read": 0
+          }
+        },
+        {
+          "input_tokens": 319,
+          "output_tokens": 26,
+          "total_tokens": 345,
+          "input_token_details": {
+            "cache_read": 0
+          }
+        },
+        {
+          "input_tokens": 366,
+          "output_tokens": 38,
+          "total_tokens": 404,
+          "input_token_details": {
+            "cache_read": 0
+          }
+        }
+      ],
+      "checks": {
+        "expected_status": true,
+        "required_tools": true,
+        "value_100000.0": true,
+        "count_4": true,
+        "dependent_order": true,
+        "api_usage_received": true
+      },
+      "passed": true
+    },
+    {
+      "scenario": "E",
+      "question": "Dùng count_words đếm chính xác \"Hoc AI rat vui\".",
+      "tool_choice": "auto",
+      "first_tool": "count_words",
+      "status": "max_steps",
+      "steps": 1,
+      "tool_calls": 1,
+      "answer": "Đã chạm giới hạn bước; chưa có câu trả lời cuối.",
+      "trace": [
+        {
+          "step": 1,
+          "event": "model",
+          "seconds": 9.355
+        },
+        {
+          "step": 1,
+          "event": "tool",
+          "name": "count_words",
+          "args": {
+            "text": "Hoc AI rat vui"
+          },
+          "id": "call_37708",
+          "dispatched": true,
+          "payload": {
+            "ok": true,
+            "data": {
+              "count": 4
+            }
+          },
+          "seconds": 0.0
+        }
+      ],
+      "model_versions": [
+        "gemini-3.5-flash-lite"
+      ],
+      "usage": [
+        {
+          "input_tokens": 248,
+          "output_tokens": 20,
+          "total_tokens": 268,
+          "input_token_details": {
+            "cache_read": 0
+          }
+        }
+      ],
+      "checks": {
+        "expected_status": true,
+        "required_tools": true,
+        "count_4": true,
+        "api_usage_received": true
+      },
+      "passed": true
+    },
+    {
+      "scenario": "F",
+      "question": "Kiểm tra xử lý lỗi: bước đầu bắt buộc gọi calculator với a=1, b=0, operation=divide. Khi nhận lỗi, giải thích vì sao không thể chia cho 0; không đổi bài toán.",
+      "tool_choice": "auto",
+      "first_tool": "calculator",
+      "status": "final",
+      "steps": 2,
+      "tool_calls": 1,
+      "answer": "Phép tính chia cho số 0 không thực hiện được vì trong toán học, chia một số cho 0 là một phép toán không xác định. Không có số nào nhân với 0 lại có thể cho ra kết quả khác 0, do đó biểu thức này không có giá trị hợp lý.",
+      "trace": [
+        {
+          "step": 1,
+          "event": "model",
+          "seconds": 9.313
+        },
+        {
+          "step": 1,
+          "event": "tool",
+          "name": "calculator",
+          "args": {
+            "a": 1,
+            "operation": "divide",
+            "b": 0
+          },
+          "id": "call_278265",
+          "dispatched": true,
+          "payload": {
+            "ok": false,
+            "error": "invalid_arguments"
+          },
+          "seconds": 0.0
+        },
+        {
+          "step": 2,
+          "event": "model",
+          "seconds": 10.329
+        }
+      ],
+      "model_versions": [
+        "gemini-3.5-flash-lite"
+      ],
+      "usage": [
+        {
+          "input_tokens": 278,
+          "output_tokens": 22,
+          "total_tokens": 300,
+          "input_token_details": {
+            "cache_read": 0
+          }
+        },
+        {
+          "input_tokens": 318,
+          "output_tokens": 62,
+          "total_tokens": 380,
+          "input_token_details": {
+            "cache_read": 0
+          }
+        }
+      ],
+      "checks": {
+        "expected_status": true,
+        "required_tools": true,
+        "tool_error_observed": true,
+        "api_usage_received": true
+      },
+      "passed": true
+    },
+    {
+      "scenario": "G",
+      "question": "Đây là phép thử gọi lặp có chủ đích. Ở mỗi lượt, chỉ gọi count_words đúng một lần với text chính xác là \"Hoc AI rat vui\", không thêm dấu câu, không đổi tham số. Cần gọi lại để kiểm tra bộ chặn, dù đã có kết quả.",
+      "tool_choice": "count_words",
+      "first_tool": null,
+      "status": "repeat_limit",
+      "steps": 3,
+      "tool_calls": 2,
+      "answer": "Đã dừng vì lặp cùng tool và tham số.",
+      "trace": [
+        {
+          "step": 1,
+          "event": "model",
+          "seconds": 8.97
+        },
+        {
+          "step": 1,
+          "event": "tool",
+          "name": "count_words",
+          "args": {
+            "text": "Hoc AI rat vui"
+          },
+          "id": "call_55771",
+          "dispatched": true,
+          "payload": {
+            "ok": true,
+            "data": {
+              "count": 4
+            }
+          },
+          "seconds": 0.0
+        },
+        {
+          "step": 2,
+          "event": "model",
+          "seconds": 10.066
+        },
+        {
+          "step": 2,
+          "event": "tool",
+          "name": "count_words",
+          "args": {
+            "text": "Hoc AI rat vui"
+          },
+          "id": "call_60052",
+          "dispatched": true,
+          "payload": {
+            "ok": true,
+            "data": {
+              "count": 4
+            }
+          },
+          "seconds": 0.0
+        },
+        {
+          "step": 3,
+          "event": "model",
+          "seconds": 10.015
+        },
+        {
+          "step": 3,
+          "event": "tool",
+          "name": "count_words",
+          "args": {
+            "text": "Hoc AI rat vui"
+          },
+          "id": "call_352938",
+          "dispatched": false,
+          "payload": {
+            "ok": false,
+            "error": "repeat_limit"
+          },
+          "seconds": 0.0
+        }
+      ],
+      "model_versions": [
+        "gemini-3.5-flash-lite"
+      ],
+      "usage": [
+        {
+          "input_tokens": 293,
+          "output_tokens": 20,
+          "total_tokens": 313,
+          "input_token_details": {
+            "cache_read": 0
+          }
+        },
+        {
+          "input_tokens": 331,
+          "output_tokens": 20,
+          "total_tokens": 351,
+          "input_token_details": {
+            "cache_read": 0
+          }
+        },
+        {
+          "input_tokens": 369,
+          "output_tokens": 20,
+          "total_tokens": 389,
+          "input_token_details": {
+            "cache_read": 0
+          }
+        }
+      ],
+      "checks": {
+        "expected_status": true,
+        "required_tools": true,
+        "blocked_call": true,
+        "same_arguments": true,
+        "no_extra_model_call": true,
+        "dispatch_budget": true,
+        "api_usage_received": true
+      },
+      "passed": true
+    },
+    {
+      "scenario": "H",
+      "question": "Kiểm tra phục hồi: ở lượt đầu chỉ gọi calculator đúng một lần với a=1, b=0, operation=divide để kiểm tra lỗi. Chờ kết quả lỗi rồi mới gọi calculator tính bài toán thực sự là 1 chia 2 ở lượt sau, sau đó trả lời.",
+      "tool_choice": "auto",
+      "first_tool": "calculator",
+      "status": "final",
+      "steps": 3,
+      "tool_calls": 2,
+      "answer": "Kết quả của phép tính 1 chia 2 là 0.5.",
+      "trace": [
+        {
+          "step": 1,
+          "event": "model",
+          "seconds": 9.652
+        },
+        {
+          "step": 1,
+          "event": "tool",
+          "name": "calculator",
+          "args": {
+            "a": 1,
+            "operation": "divide",
+            "b": 0
+          },
+          "id": "call_315593",
+          "dispatched": true,
+          "payload": {
+            "ok": false,
+            "error": "invalid_arguments"
+          },
+          "seconds": 0.0
+        },
+        {
+          "step": 2,
+          "event": "model",
+          "seconds": 9.861
+        },
+        {
+          "step": 2,
+          "event": "tool",
+          "name": "calculator",
+          "args": {
+            "b": 2,
+            "a": 1,
+            "operation": "divide"
+          },
+          "id": "call_327705",
+          "dispatched": true,
+          "payload": {
+            "ok": true,
+            "data": {
+              "value": 0.5
+            }
+          },
+          "seconds": 0.0
+        },
+        {
+          "step": 3,
+          "event": "model",
+          "seconds": 9.86
+        }
+      ],
+      "model_versions": [
+        "gemini-3.5-flash-lite"
+      ],
+      "usage": [
+        {
+          "input_tokens": 293,
+          "output_tokens": 22,
+          "total_tokens": 315,
+          "input_token_details": {
+            "cache_read": 0
+          }
+        },
+        {
+          "input_tokens": 333,
+          "output_tokens": 22,
+          "total_tokens": 355,
+          "input_token_details": {
+            "cache_read": 0
+          }
+        },
+        {
+          "input_tokens": 373,
+          "output_tokens": 16,
+          "total_tokens": 389,
+          "input_token_details": {
+            "cache_read": 0
+          }
+        }
+      ],
+      "checks": {
+        "expected_status": true,
+        "required_tools": true,
+        "value_0.5": true,
+        "tool_error_observed": true,
+        "recovery_after_error": true,
+        "api_usage_received": true
+      },
+      "passed": true
+    }
+  ]
+}
